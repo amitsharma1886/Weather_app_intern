@@ -49,40 +49,44 @@ export default function Weather() {
         <button type="submit">Go</button>
 
         {loading && <p>Loading…</p>}
-        {error   && <p style={{ color: 'red' }}>{error}</p>}
+        {error && <p style={{ color: 'red' }}>{error}</p>}
 
         {weather && !error && (
           <div>
-            <h2>{weather.name}</h2>
+            <h2>{weather.name}, {weather.sys.country}</h2>
             <WeatherIcon main={weather.weather[0].main} />
 
-            <p>
-              {weather.main.temp}°C • {weather.weather[0].description}
-            </p>
+            <p>{weather.main.temp}°C • {weather.weather[0].description}</p>
+            <p>🌡️ Feels Like: {weather.main.feels_like}°C</p>
+            <p>💧 Humidity: {weather.main.humidity}%</p>
+            <p>🌬️ Wind: {weather.wind.speed} m/s</p>
+            <p>🌅 Sunrise: {new Date(weather.sys.sunrise * 1000).toLocaleTimeString()}</p>
+            <p>🌇 Sunset: {new Date(weather.sys.sunset * 1000).toLocaleTimeString()}</p>
           </div>
         )}
       </form>
     </div>
   );
+
   function WeatherIcon({ main }) {
-  switch (main) {
-    case 'Clear':
-      return <span className="weather-icon sun" title="Clear">☀️</span>;
-    case 'Clouds':
-      return <span className="weather-icon cloud" title="Clouds">☁️</span>;
-    case 'Rain':
-      return <span className="weather-icon rain" title="Rain">🌧️</span>;
-    case 'Drizzle':
-      return <span className="weather-icon drizzle" title="Drizzle">🌦️</span>;
-    case 'Thunderstorm':
-      return <span className="weather-icon thunder" title="Thunderstorm">⛈️</span>;
-    case 'Snow':
-      return <span className="weather-icon snow" title="Snow">❄️</span>;
-    case 'Mist':
-    case 'Fog':
-      return <span className="weather-icon mist" title="Mist">🌫️</span>;
-    default:
-      return <span className="weather-icon" title={main}>🌡️</span>;
+    switch (main) {
+      case 'Clear':
+        return <span className="weather-icon sun" title="Clear">☀️</span>;
+      case 'Clouds':
+        return <span className="weather-icon cloud" title="Clouds">☁️</span>;
+      case 'Rain':
+        return <span className="weather-icon rain" title="Rain">🌧️</span>;
+      case 'Drizzle':
+        return <span className="weather-icon drizzle" title="Drizzle">🌦️</span>;
+      case 'Thunderstorm':
+        return <span className="weather-icon thunder" title="Thunderstorm">⛈️</span>;
+      case 'Snow':
+        return <span className="weather-icon snow" title="Snow">❄️</span>;
+      case 'Mist':
+      case 'Fog':
+        return <span className="weather-icon mist" title="Mist">🌫️</span>;
+      default:
+        return <span className="weather-icon" title={main}>🌡️</span>;
+    }
   }
-}
 }
